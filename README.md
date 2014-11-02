@@ -1,0 +1,4 @@
+ManaResource
+============
+
+Input resource definition
