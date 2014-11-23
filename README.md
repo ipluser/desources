@@ -1,4 +1,4 @@
 ManaResource
 ============
 
-Input resource definition
+Resource definition
