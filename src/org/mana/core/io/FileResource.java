@@ -20,7 +20,7 @@ public class FileResource extends AbstractResource {
 	
 	public FileResource(File file) {
 		if (file == null) {
-			throw new IllegalArgumentException("File must not be null");
+			throw new IllegalArgumentException("file must not be null");
 		}
 		
 		this.file = file;
@@ -29,7 +29,7 @@ public class FileResource extends AbstractResource {
 	
 	public FileResource(String path) {
 		if (path == null) {
-			throw new IllegalArgumentException("Path must not be null");
+			throw new IllegalArgumentException("path must not be null");
 		}
 		
 		this.path = path;
