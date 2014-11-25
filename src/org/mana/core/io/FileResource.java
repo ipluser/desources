@@ -36,7 +36,7 @@ public class FileResource extends AbstractResource {
 		this.file = new File(this.path);
 	}
 	
-	public final String getPath() {
+	public String getPath() {
 		return path;
 	}
 	

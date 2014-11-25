@@ -1,10 +1,8 @@
 package org.mana.core.io;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Arrays;
 
 /**
@@ -18,7 +16,7 @@ public class ByteArrayResource extends AbstractResource {
 	private final String description;
 	
 	public ByteArrayResource(byte[] byteArray) {
-		this(byteArray, "byte-array resource",
+		this(byteArray, "byte array resource",
 				"resource loaded from byte array");
 	}
 	
@@ -34,8 +32,8 @@ public class ByteArrayResource extends AbstractResource {
 		this.description = (description == null ? "" : description);
 	}
 	
-	public final byte[] getByteArray() {
-		return byteArray;
+	public byte[] getByteArray() {
+		return Arrays.copyOf(byteArray, byteArray.length);
 	}
 	
 	@Override
@@ -59,14 +57,6 @@ public class ByteArrayResource extends AbstractResource {
 	}
 	
 	@Override
-	public OutputStream getOutputStream() throws IOException {
-		OutputStream os = new ByteArrayOutputStream(byteArray.length);
-		os.write(byteArray);
-		os.flush();
-		return os;
-	}
-	
-	@Override
 	public boolean equals(Object obj) {
 		return (obj == this ||
 			(obj instanceof ByteArrayResource 
@@ -75,6 +65,6 @@ public class ByteArrayResource extends AbstractResource {
 
 	@Override
 	public int hashCode() {
-		return (byte[].class.hashCode() * 23 * this.byteArray.length);
+		return Arrays.hashCode(byteArray);
 	}
 }

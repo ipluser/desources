@@ -29,9 +29,10 @@ public class TestFileResource {
 	}
 	
 	@Test
-	public void testInputStreamByFile() throws Exception {
+	public void testFunctionByFile() throws Exception {
 		FileResource fileResource = new FileResource(file);
-		System.out.println("name[" + fileResource.getName()
+		System.out.println("testFunctionByFile: "
+				+ "name[" + fileResource.getName()
 				+ "], desc[" + fileResource.getDescription()
 				+ "], path[" + fileResource.getPath()
 				+ "], uri[" + fileResource.getUri()
@@ -43,7 +44,29 @@ public class TestFileResource {
 				+ "], size[" + fileResource.size()
 				+ "], lastModified[" + fileResource.lastModified()
 				+ "]");
-		
+	}
+	
+	@Test
+	public void testFunctionByAbsolutePath() throws Exception {
+		FileResource fileResource = new FileResource(absolutePath);
+		System.out.println("testFunctionByAbsolutePath: "
+				+ "name[" + fileResource.getName()
+				+ "], desc[" + fileResource.getDescription()
+				+ "], path[" + fileResource.getPath()
+				+ "], uri[" + fileResource.getUri()
+				+ "], url[" + fileResource.getUrl()
+				+ "], exists[" + fileResource.exists()
+				+ "], isOpen[" + fileResource.isOpen()
+				+ "], isReadale[" + fileResource.isReadable()
+				+ "], isWritable[" + fileResource.isWritable()
+				+ "], size[" + fileResource.size()
+				+ "], lastModified[" + fileResource.lastModified()
+				+ "]");
+	}
+	
+	@Test
+	public void testInputStreamByFile() throws Exception {
+		FileResource fileResource = new FileResource(file);
 		InputStream is = fileResource.getInputStream();
 		try {
 			Assert.assertNotNull(is);
@@ -55,19 +78,6 @@ public class TestFileResource {
 	@Test
 	public void testInputStreamByAbsolutePath() throws Exception {
 		FileResource fileResource = new FileResource(absolutePath);
-		System.out.println("name[" + fileResource.getName()
-				+ "], desc[" + fileResource.getDescription()
-				+ "], path[" + fileResource.getPath()
-				+ "], uri[" + fileResource.getUri()
-				+ "], url[" + fileResource.getUrl()
-				+ "], exists[" + fileResource.exists()
-				+ "], isOpen[" + fileResource.isOpen()
-				+ "], isReadale[" + fileResource.isReadable()
-				+ "], isWritable[" + fileResource.isWritable()
-				+ "], size[" + fileResource.size()
-				+ "], lastModified[" + fileResource.lastModified()
-				+ "]");
-		
 		InputStream is = fileResource.getInputStream();
 		try {
 			Assert.assertNotNull(is);
