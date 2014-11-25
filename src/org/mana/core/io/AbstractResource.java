@@ -73,7 +73,7 @@ public abstract class AbstractResource extends AbstractSource implements Resourc
 		try {
 			return url.toURI();
 		} catch (URISyntaxException e) {
-			throw new IOException("Invalid URI [" + url + "]", e);
+			throw new IOException("invalid URI [" + url + "]", e);
 		}
 	}
 	
