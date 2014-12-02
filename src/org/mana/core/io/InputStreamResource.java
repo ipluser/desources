@@ -13,8 +13,6 @@ public class InputStreamResource extends AbstractResource {
 	private final String name;
 	private final String description;
 	
-	private boolean read = true;
-	
 	public InputStreamResource(InputStream inputStream) {
 		this(inputStream, "InputStream resource",
 				"resource loaded from InputStream");
@@ -22,6 +20,10 @@ public class InputStreamResource extends AbstractResource {
 	
 	public InputStreamResource(InputStream inputStream, 
 			String name, String description) {
+		if (inputStream == null) {
+			throw new IllegalArgumentException("inputStream must not be null");
+		}
+		
 		this.inputStream = inputStream;
 		this.name = name;
 		this.description = description;
@@ -44,20 +46,14 @@ public class InputStreamResource extends AbstractResource {
 	
 	@Override
 	public InputStream getInputStream() throws IOException {
-		if (!this.read) {
-			throw new IOException("InputStream has already been read, " +
-					"don't use InputStreamResource if a stream needs to be read multiple times");
-		}
-		
-		this.read = false;
 		return inputStream;
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		return (obj == this ||
-			(obj instanceof InputStreamResource 
-					&& ((InputStreamResource) obj).inputStream.equals(this.inputStream)));
+				(obj instanceof InputStreamResource 
+						&& ((InputStreamResource) obj).inputStream.equals(this.inputStream)));
 	}
 
 	@Override

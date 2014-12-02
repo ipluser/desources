@@ -84,8 +84,9 @@ public abstract class AbstractResource extends AbstractSource implements Resourc
 	
 	@Override
 	public boolean equals(Object obj) {
-		return (obj == this ||
-			(obj instanceof Resource && ((Resource) obj).getDescription().equals(getDescription())));
+		return (obj == this || 
+				(obj instanceof Resource 
+						&& ((Resource) obj).getDescription().equals(getDescription())));
 	}
 
 	@Override

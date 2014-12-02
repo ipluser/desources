@@ -13,7 +13,7 @@ public class OutputStreamResource extends AbstractResource {
 	private final String name;
 	private final String description;
 	
-	private boolean read = true;
+	private boolean write = true;
 	
 	public OutputStreamResource(OutputStream outputStream) {
 		this(outputStream, "OutputStream resource",
@@ -22,6 +22,10 @@ public class OutputStreamResource extends AbstractResource {
 	
 	public OutputStreamResource(OutputStream outputStream, 
 			String name, String description) {
+		if (outputStream == null) {
+			throw new IllegalArgumentException("outputStream must not be null");
+		}
+		
 		this.outputStream = outputStream;
 		this.name = name;
 		this.description = description;
@@ -44,20 +48,20 @@ public class OutputStreamResource extends AbstractResource {
 	
 	@Override
 	public OutputStream getOutputStream() throws IOException {
-		if (!this.read) {
-			throw new IOException("OutputStream has already been read, " +
-					"don't use OutputStreamResource if a stream needs to be read multiple times");
+		if (!this.write) {
+			throw new IOException("OutputStream has already been write, " +
+					"don't use OutputStreamResource if a stream needs to be write multiple times");
 		}
 		
-		this.read = false;
+		this.write = false;
 		return outputStream;
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		return (obj == this ||
-			(obj instanceof OutputStreamResource 
-					&& ((OutputStreamResource) obj).outputStream.equals(this.outputStream)));
+		return (obj == this || 
+				(obj instanceof OutputStreamResource 
+						&& ((OutputStreamResource) obj).outputStream.equals(this.outputStream)));
 	}
 
 	@Override
