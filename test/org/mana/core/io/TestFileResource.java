@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -13,8 +14,14 @@ import org.junit.Test;
  */
 public class TestFileResource {
 
-	private File file = new File("D:/tempFile.txt");
-	private String absolutePath = "D:/tempPath.txt";
+	private static FileResource fRscByFile;
+	private static FileResource fRscByPath;
+	
+	@BeforeClass
+	public static void before() throws Exception {
+		fRscByFile = new FileResource(new File("D:/tempFile.txt"));
+		fRscByPath = new FileResource("D:/tempPath.txt");
+	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorByNullFile() {
@@ -30,44 +37,41 @@ public class TestFileResource {
 	
 	@Test
 	public void testFunctionByFile() throws Exception {
-		FileResource fileResource = new FileResource(file);
 		System.out.println("testFunctionByFile: "
-				+ "name[" + fileResource.getName()
-				+ "], desc[" + fileResource.getDescription()
-				+ "], path[" + fileResource.getPath()
-				+ "], uri[" + fileResource.getUri()
-				+ "], url[" + fileResource.getUrl()
-				+ "], exists[" + fileResource.exists()
-				+ "], isOpen[" + fileResource.isOpen()
-				+ "], isReadale[" + fileResource.isReadable()
-				+ "], isWritable[" + fileResource.isWritable()
-				+ "], size[" + fileResource.size()
-				+ "], lastModified[" + fileResource.lastModified()
+				+ "name[" + fRscByFile.getName()
+				+ "], desc[" + fRscByFile.getDescription()
+				+ "], path[" + fRscByFile.getPath()
+				+ "], uri[" + fRscByFile.getUri()
+				+ "], url[" + fRscByFile.getUrl()
+				+ "], exists[" + fRscByFile.exists()
+				+ "], isOpen[" + fRscByFile.isOpen()
+				+ "], isReadale[" + fRscByFile.isReadable()
+				+ "], isWritable[" + fRscByFile.isWritable()
+				+ "], size[" + fRscByFile.size()
+				+ "], lastModified[" + fRscByFile.lastModified()
 				+ "]");
 	}
 	
 	@Test
 	public void testFunctionByAbsolutePath() throws Exception {
-		FileResource fileResource = new FileResource(absolutePath);
 		System.out.println("testFunctionByAbsolutePath: "
-				+ "name[" + fileResource.getName()
-				+ "], desc[" + fileResource.getDescription()
-				+ "], path[" + fileResource.getPath()
-				+ "], uri[" + fileResource.getUri()
-				+ "], url[" + fileResource.getUrl()
-				+ "], exists[" + fileResource.exists()
-				+ "], isOpen[" + fileResource.isOpen()
-				+ "], isReadale[" + fileResource.isReadable()
-				+ "], isWritable[" + fileResource.isWritable()
-				+ "], size[" + fileResource.size()
-				+ "], lastModified[" + fileResource.lastModified()
+				+ "name[" + fRscByPath.getName()
+				+ "], desc[" + fRscByPath.getDescription()
+				+ "], path[" + fRscByPath.getPath()
+				+ "], uri[" + fRscByPath.getUri()
+				+ "], url[" + fRscByPath.getUrl()
+				+ "], exists[" + fRscByPath.exists()
+				+ "], isOpen[" + fRscByPath.isOpen()
+				+ "], isReadale[" + fRscByPath.isReadable()
+				+ "], isWritable[" + fRscByPath.isWritable()
+				+ "], size[" + fRscByPath.size()
+				+ "], lastModified[" + fRscByPath.lastModified()
 				+ "]");
 	}
 	
 	@Test
 	public void testInputStreamByFile() throws Exception {
-		FileResource fileResource = new FileResource(file);
-		InputStream is = fileResource.getInputStream();
+		InputStream is = fRscByFile.getInputStream();
 		try {
 			Assert.assertNotNull(is);
 		} finally {
@@ -77,8 +81,7 @@ public class TestFileResource {
 	
 	@Test
 	public void testInputStreamByAbsolutePath() throws Exception {
-		FileResource fileResource = new FileResource(absolutePath);
-		InputStream is = fileResource.getInputStream();
+		InputStream is = fRscByPath.getInputStream();
 		try {
 			Assert.assertNotNull(is);
 		} finally {
@@ -88,8 +91,7 @@ public class TestFileResource {
 	
 	@Test
 	public void testOutputStreamByFile() throws Exception {
-		FileResource fileResource = new FileResource(file);
-		OutputStream os = fileResource.getOutputStream();
+		OutputStream os = fRscByFile.getOutputStream();
 		try {
 			Assert.assertNotNull(os);
 		} finally {
@@ -99,8 +101,7 @@ public class TestFileResource {
 	
 	@Test
 	public void testOutputStreamByAbsolutePath() throws Exception {
-		FileResource fileResource = new FileResource(absolutePath);
-		OutputStream os = fileResource.getOutputStream();
+		OutputStream os = fRscByPath.getOutputStream();
 		try {
 			Assert.assertNotNull(os);
 		} finally {

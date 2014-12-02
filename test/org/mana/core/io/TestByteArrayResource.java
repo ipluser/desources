@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -12,7 +13,13 @@ import org.junit.Test;
  */
 public class TestByteArrayResource {
 
-	private final byte[] byteArray = "测试ByteArrayResource".getBytes();
+	private static final byte[] byteArray = "测试ByteArrayResource".getBytes();
+	private static ByteArrayResource resource;
+	
+	@BeforeClass
+	public static void before() throws Exception {
+		resource = new ByteArrayResource(byteArray);
+	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorByNullByteArray() {
@@ -20,20 +27,18 @@ public class TestByteArrayResource {
 	}
 	
 	@Test
-	public void testFunctionByByteArray() throws Exception {
-		ByteArrayResource byteArrayResource = new ByteArrayResource(byteArray);
-		System.out.println("testFunctionByByteArray: "
-				+ "byteArray[" + byteArrayResource.getByteArray() 
-				+ "], name[" + byteArrayResource.getName()
-				+ "], description[" + byteArrayResource.getDescription()
-				+ "], size[" + byteArrayResource.size()
+	public void testFunction() throws Exception {
+		System.out.println("testFunction: "
+				+ "byteArray[" + resource.getByteArray() 
+				+ "], name[" + resource.getName()
+				+ "], description[" + resource.getDescription()
+				+ "], size[" + resource.size()
 				+ "]");
 	}
 	
 	@Test
-	public void testInputStreamByByteArray() throws Exception {
-		ByteArrayResource byteArrayResource = new ByteArrayResource(byteArray);
-		InputStream is = byteArrayResource.getInputStream();
+	public void testInputStream() throws Exception {
+		InputStream is = resource.getInputStream();
 		try {
 			Assert.assertNotNull(is);
 		} finally {
@@ -42,22 +47,19 @@ public class TestByteArrayResource {
 	}
 	
 	@Test(expected = IOException.class)
-	public void testOutputStreamByFile() throws Exception {
-		ByteArrayResource byteArrayResource = new ByteArrayResource(byteArray);
-		byteArrayResource.getOutputStream();
+	public void testOutputStream() throws Exception {
+		resource.getOutputStream();
 	}
 	
 	@Test
 	public void testHashCodeNotEqual() throws Exception {
-		ByteArrayResource bar1 = new ByteArrayResource(byteArray);
-		ByteArrayResource bar2 = new ByteArrayResource("测试ByteArrayResource2".getBytes());
-		Assert.assertTrue(!bar1.equals(bar2));
+		ByteArrayResource cmpResource = new ByteArrayResource("测试ByteArrayResource2".getBytes());
+		Assert.assertTrue(!resource.equals(cmpResource));
 	}
 	
 	@Test
 	public void testHashCodeEqual() throws Exception {
-		ByteArrayResource bar1 = new ByteArrayResource(byteArray);
-		ByteArrayResource bar2 = new ByteArrayResource("测试ByteArrayResource".getBytes());
-		Assert.assertTrue(bar1.equals(bar2));
+		ByteArrayResource cmpResource = new ByteArrayResource("测试ByteArrayResource".getBytes());
+		Assert.assertTrue(resource.equals(cmpResource));
 	}
 }
