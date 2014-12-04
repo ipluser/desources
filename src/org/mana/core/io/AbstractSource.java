@@ -10,10 +10,12 @@ import java.io.OutputStream;
  */
 public abstract class AbstractSource implements Source {
 
+	@Override
 	public InputStream getInputStream() throws IOException {
 		throw new IOException("InputStream not supported");
 	}
 	
+	@Override
 	public OutputStream getOutputStream() throws IOException {
 		throw new IOException("OutputStream not supported");
 	}
