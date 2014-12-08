@@ -1,0 +1,166 @@
+package org.mana.core.io;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
+/**
+ * @author pluser
+ * @version 0.5 2014/12/8
+ */
+public class ClassPathResource extends AbstractResource {
+
+	protected static final String FOLDER_SEPARATOR = "/";
+	
+	private final String path;
+	
+	private ClassLoader classLoader;
+	private Class<?> clazz;
+	
+	/**
+	 * 
+	 * @param path path the absolute path within the classpath
+	 */
+	public ClassPathResource(String path) {
+		this(path, null, null);
+	}
+	
+	/**
+	 * 
+	 * @param path path the absolute path within the classpath
+	 * @param classLoader the class loader to load the resource with, or null for the thread context class loader
+	 */
+	public ClassPathResource(String path, ClassLoader classLoader) {
+		this(path, classLoader, null);
+	}
+	
+	/**
+	 * 
+	 * @param path relative or absolute path within the class path
+	 * @param clazz the class to load resources with
+	 */
+	public ClassPathResource(String path, Class<?> clazz) {		
+		this(path, null, clazz);
+	}
+	
+	/**
+	 * 
+	 * @param path relative or absolute path within the class path
+	 * @param classLoader the class loader to load the resource with, or null for the thread context class loader
+	 * @param clazz the class to load resources with
+	 */
+	public ClassPathResource(String path, ClassLoader classLoader, Class<?> clazz) {
+		if (path == null) {
+			throw new IllegalArgumentException("path must not be null");
+		}
+		
+		this.path = path;
+		this.classLoader = (classLoader == null) ? getDefaultClassLoader() : classLoader;
+		this.clazz = clazz;
+	}
+
+	public String getPath() {
+		return path;
+	}
+	
+	public ClassLoader getClassLoader() {
+		return classLoader != null ? classLoader : clazz.getClassLoader();
+	}
+	
+	@Override
+	public String getName() {
+		int index = path.lastIndexOf(FOLDER_SEPARATOR);
+		return (index != -1 ? path.substring(index + 1) : path);
+	}
+	
+	@Override
+	public String getDescription() {
+		return "classPath [" + this.path + "]";
+	}
+	
+	@Override
+	public boolean exists() {
+		URL url = null;
+		if (clazz != null) {
+			url = clazz.getResource(path);
+		} else {
+			url = classLoader.getResource(path);
+		}
+		
+		return url != null;
+	}
+	
+	@Override
+	public URL getUrl() throws IOException {
+		URL url = null;
+		if (clazz != null) {
+			url = clazz.getResource(path);
+		} else {
+			url = classLoader.getResource(path);
+		}
+		
+		if (url == null) {
+			throw new FileNotFoundException(getDescription() 
+					+ " cannot be resolved to URL");
+		}
+		
+		return url;
+	}
+	
+	@Override
+	public InputStream getInputStream() throws IOException {
+		InputStream inputStream = null;
+		if (clazz != null) {
+			inputStream = clazz.getResourceAsStream(path);
+		} else {
+			inputStream = classLoader.getResourceAsStream(path);
+		}
+		
+		if (inputStream == null) {
+			throw new IOException("InputStream not supported");
+		}
+		
+		return inputStream;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (obj == this) {
+			return true;
+		}
+		
+		if (obj instanceof ClassPathResource 
+				&& ((ClassPathResource) obj).path.equals(this.path)
+				&& ((ClassPathResource) obj).classLoader.equals(this.classLoader)) {
+			Class<?> tempClazz = ((ClassPathResource) obj).clazz;
+			if (tempClazz == clazz || 
+					(tempClazz != null && clazz != null && tempClazz.equals(clazz))) {
+				return true;
+			}
+		}
+		
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return path.hashCode();
+	}
+	
+	protected ClassLoader getDefaultClassLoader() {
+		ClassLoader defaultClassLoader = null;
+		try {
+			defaultClassLoader = Thread.currentThread().getContextClassLoader();
+		} catch (Throwable t) {
+		}
+		
+		if (defaultClassLoader == null) {
+			defaultClassLoader = ClassPathResource.class.getClassLoader();
+		}
+		
+		return defaultClassLoader;
+	}
+	
+}
