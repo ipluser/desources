@@ -2,18 +2,22 @@ package org.mana.core.io;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author pluser
  * @version 0.5 2014/11/27
  */
 public class OutputStreamResource extends AbstractResource {
+	
+	private static final String DEFAULT_NAME = "OutputStream resource";
+	private static final String DEFAULT_DESCRIPTION = "resource loaded from OutputStream";
 
 	private final OutputStream outputStream;
 	private final String name;
 	private final String description;
 	
-	private boolean write = true;
+	private AtomicBoolean writable;
 	
 	public OutputStreamResource(OutputStream outputStream) {
 		this(outputStream, "OutputStream resource",
@@ -27,8 +31,9 @@ public class OutputStreamResource extends AbstractResource {
 		}
 		
 		this.outputStream = outputStream;
-		this.name = name;
-		this.description = description;
+		this.name = (name == null ? DEFAULT_NAME : name);
+		this.description = (description == null ? DEFAULT_DESCRIPTION : description);
+		this.writable = new AtomicBoolean(true);
 	}
 	
 	@Override
@@ -47,13 +52,23 @@ public class OutputStreamResource extends AbstractResource {
 	}
 	
 	@Override
+	public boolean isReadable() {
+		return false;
+	}
+	
+	@Override
+	public boolean isWritable() {
+		return writable.get();
+	}
+	
+	@Override
 	public OutputStream getOutputStream() throws IOException {
-		if (!this.write) {
+		if (!writable.get()) {
 			throw new IOException("OutputStream has already been write, " +
 					"don't use OutputStreamResource if a stream needs to be write multiple times");
 		}
 		
-		this.write = false;
+		writable.set(false);
 		return outputStream;
 	}
 	
@@ -68,5 +83,4 @@ public class OutputStreamResource extends AbstractResource {
 	public int hashCode() {
 		return outputStream.hashCode();
 	}
-
 }

@@ -20,7 +20,7 @@ public class ClassPathResource extends AbstractResource {
 	
 	/**
 	 * 
-	 * @param path path the absolute path within the classpath
+	 * @param path the absolute path within the classpath
 	 */
 	public ClassPathResource(String path) {
 		this(path, null, null);
@@ -28,7 +28,7 @@ public class ClassPathResource extends AbstractResource {
 	
 	/**
 	 * 
-	 * @param path path the absolute path within the classpath
+	 * @param path the absolute path within the classpath
 	 * @param classLoader the class loader to load the resource with, or null for the thread context class loader
 	 */
 	public ClassPathResource(String path, ClassLoader classLoader) {
@@ -76,7 +76,12 @@ public class ClassPathResource extends AbstractResource {
 	
 	@Override
 	public String getDescription() {
-		return "classPath [" + this.path + "]";
+		return "resource loaded from classPath [" + this.path + "]";
+	}
+	
+	@Override
+	public boolean isWritable() {
+		return false;
 	}
 	
 	@Override
@@ -84,7 +89,9 @@ public class ClassPathResource extends AbstractResource {
 		URL url = null;
 		if (clazz != null) {
 			url = clazz.getResource(path);
-		} else {
+		} 
+		
+		if (url == null && classLoader != null) {
 			url = classLoader.getResource(path);
 		}
 		
@@ -96,13 +103,15 @@ public class ClassPathResource extends AbstractResource {
 		URL url = null;
 		if (clazz != null) {
 			url = clazz.getResource(path);
-		} else {
+		}
+		
+		if (url == null && classLoader != null) {
 			url = classLoader.getResource(path);
 		}
 		
 		if (url == null) {
 			throw new FileNotFoundException(getDescription() 
-					+ " cannot be resolved to URL");
+					+ " that cannot be resolved to URL");
 		}
 		
 		return url;
@@ -113,7 +122,9 @@ public class ClassPathResource extends AbstractResource {
 		InputStream inputStream = null;
 		if (clazz != null) {
 			inputStream = clazz.getResourceAsStream(path);
-		} else {
+		}
+		
+		if (inputStream == null && classLoader != null) {
 			inputStream = classLoader.getResourceAsStream(path);
 		}
 		
@@ -162,5 +173,4 @@ public class ClassPathResource extends AbstractResource {
 		
 		return defaultClassLoader;
 	}
-	
 }

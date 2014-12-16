@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -42,17 +41,23 @@ public class UrlResource extends AbstractResource {
 	}
 	
 	@Override
+	public String getName() {
+		return url.toString();
+	}
+	
+	@Override
+	public String getDescription() {
+		return "resource loaded from url [" + url.toString() + "]";
+	}
+	
+	@Override
 	public URL getUrl() throws IOException {
 		return url;
 	}
 	
 	@Override
-	public URI getUri() throws IOException {
-		try {
-			return url.toURI();
-		} catch (URISyntaxException e) {
-			throw new IOException("Invalid URI [" + url + "]", e);
-		}
+	public boolean isWritable() {
+		return false;
 	}
 	
 	@Override
@@ -80,10 +85,5 @@ public class UrlResource extends AbstractResource {
 	@Override
 	public int hashCode() {
 		return url.hashCode();
-	}
-
-	@Override
-	public String getDescription() {
-		return "url [" + url.toString() + "]";
 	}
 }

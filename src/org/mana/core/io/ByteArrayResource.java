@@ -11,13 +11,15 @@ import java.util.Arrays;
  */
 public class ByteArrayResource extends AbstractResource {
 
+	private static final String DEFAULT_NAME = "byte array resource";
+	private static final String DEFAULT_DESCRIPTION = "resource loaded from byte array";
+	
 	private final byte[] byteArray;
 	private final String name;
 	private final String description;
 	
 	public ByteArrayResource(byte[] byteArray) {
-		this(byteArray, "byte array resource",
-				"resource loaded from byte array");
+		this(byteArray, null, null);
 	}
 	
 	public ByteArrayResource(byte[] byteArray, String name, 
@@ -28,8 +30,8 @@ public class ByteArrayResource extends AbstractResource {
 		}
 		
 		this.byteArray = byteArray;
-		this.name = (name == null ? "" : name);
-		this.description = (description == null ? "" : description);
+		this.name = (name == null ? DEFAULT_NAME : name);
+		this.description = (description == null ? DEFAULT_DESCRIPTION : description);
 	}
 	
 	public byte[] getByteArray() {
@@ -44,6 +46,11 @@ public class ByteArrayResource extends AbstractResource {
 	@Override
 	public String getDescription() {
 		return description;
+	}
+	
+	@Override
+	public boolean isWritable() {
+		return false;
 	}
 	
 	@Override

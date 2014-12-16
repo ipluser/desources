@@ -47,7 +47,7 @@ public class FileResource extends AbstractResource {
 	
 	@Override
 	public String getDescription() {
-		return "file [" + this.file.getAbsolutePath() + "]";
+		return "resource loaded from file[" + path + "]";
 	}
 	
 	@Override
