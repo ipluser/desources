@@ -13,26 +13,32 @@ import java.net.URL;
  */
 public abstract class AbstractResource extends AbstractSource implements Resource {
 
+	@Override
 	public String getName() {
 		return "";
 	}
 	
+	@Override
 	public boolean exists() {
 		return true;
 	}
 	
+	@Override
 	public boolean isOpen() {
 		return false;
 	}
 	
+	@Override
 	public boolean isReadable() {
 		return true;
 	}
 	
+	@Override
 	public boolean isWritable() {
 		return true;
 	}
 	
+	@Override
 	public long size() throws IOException {
 		InputStream inputStream = getInputStream();
 		if (inputStream == null) {
@@ -58,16 +64,19 @@ public abstract class AbstractResource extends AbstractSource implements Resourc
 		}
 	}
 	
+	@Override
 	public long lastModified() throws IOException {
 		throw new FileNotFoundException(getDescription() 
 				+ "cannot be resolved last-modified timestamp");
 	}
 	
+	@Override
 	public URL getUrl() throws IOException {
 		throw new FileNotFoundException(getDescription() 
 				+ " cannot be resolved to URL");
 	}
 	
+	@Override
 	public URI getUri() throws IOException {
 		URL url = getUrl();
 		try {

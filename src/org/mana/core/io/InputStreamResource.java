@@ -9,13 +9,15 @@ import java.io.InputStream;
  */
 public class InputStreamResource extends AbstractResource {
 
+	private static final String DEFAULT_NAME = "InputStream resource";
+	private static final String DEFAULT_DESCRIPTION = "resource loaded from InputStream";
+	
 	private final InputStream inputStream;
 	private final String name;
 	private final String description;
 	
 	public InputStreamResource(InputStream inputStream) {
-		this(inputStream, "InputStream resource",
-				"resource loaded from InputStream");
+		this(inputStream, null, null);
 	}
 	
 	public InputStreamResource(InputStream inputStream, 
@@ -25,8 +27,8 @@ public class InputStreamResource extends AbstractResource {
 		}
 		
 		this.inputStream = inputStream;
-		this.name = name;
-		this.description = description;
+		this.name = (name == null ? DEFAULT_NAME : name);
+		this.description = (description == null ? DEFAULT_DESCRIPTION : description);
 	}
 	
 	@Override
@@ -45,6 +47,11 @@ public class InputStreamResource extends AbstractResource {
 	}
 	
 	@Override
+	public boolean isWritable() {
+		return false;
+	}
+	
+	@Override
 	public InputStream getInputStream() throws IOException {
 		return inputStream;
 	}
@@ -60,5 +67,4 @@ public class InputStreamResource extends AbstractResource {
 	public int hashCode() {
 		return inputStream.hashCode();
 	}
-
 }
