@@ -1,4 +1,4 @@
-package org.mana.core.io;
+package org.mana.resource;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -6,6 +6,7 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mana.resource.UrlResource;
 
 /**
  * @author pluser

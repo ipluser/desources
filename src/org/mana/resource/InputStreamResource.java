@@ -1,4 +1,4 @@
-package org.mana.core.io;
+package org.mana.resource;
 
 import java.io.IOException;
 import java.io.InputStream;

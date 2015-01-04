@@ -1,9 +1,10 @@
-package org.mana.core.io;
+package org.mana.resource;
 
 import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.mana.resource.ClassPathResource;
 
 /**
  * @author pluser

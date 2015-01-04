@@ -1,9 +1,11 @@
-package org.mana.core.io;
+package org.mana.resource;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+
+import org.mana.resource.util.ClassUtil;
 
 /**
  * @author pluser
@@ -56,7 +58,7 @@ public class ClassPathResource extends AbstractResource {
 		}
 		
 		this.path = path;
-		this.classLoader = (classLoader == null) ? getDefaultClassLoader() : classLoader;
+		this.classLoader = (classLoader == null) ? ClassUtil.getDefaultClassLoader() : classLoader;
 		this.clazz = clazz;
 	}
 
@@ -158,19 +160,5 @@ public class ClassPathResource extends AbstractResource {
 	@Override
 	public int hashCode() {
 		return path.hashCode();
-	}
-	
-	protected ClassLoader getDefaultClassLoader() {
-		ClassLoader defaultClassLoader = null;
-		try {
-			defaultClassLoader = Thread.currentThread().getContextClassLoader();
-		} catch (Throwable t) {
-		}
-		
-		if (defaultClassLoader == null) {
-			defaultClassLoader = ClassPathResource.class.getClassLoader();
-		}
-		
-		return defaultClassLoader;
 	}
 }

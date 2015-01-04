@@ -1,4 +1,4 @@
-package org.mana.core.io;
+package org.mana.resource;
 
 import java.io.File;
 import java.io.InputStream;
@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mana.resource.FileResource;
 
 /**
  * @author pluser

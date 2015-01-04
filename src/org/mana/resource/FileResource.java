@@ -1,4 +1,4 @@
-package org.mana.core.io;
+package org.mana.resource;
 
 import java.io.File;
 import java.io.FileInputStream;

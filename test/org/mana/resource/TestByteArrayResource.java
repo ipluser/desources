@@ -1,4 +1,4 @@
-package org.mana.core.io;
+package org.mana.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,6 +6,7 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mana.resource.ByteArrayResource;
 
 /**
  * @author pluser
