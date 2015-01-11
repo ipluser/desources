@@ -1,32 +1,33 @@
-package org.mana.core.io;
+package org.mana.resource;
 
-import java.io.BufferedOutputStream;
+import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mana.resource.InputStreamResource;
 
 /**
  * @author pluser
  * @version 0.5 2014/12/2
  */
-public class TestOutputStreamResource {
+public class TestInputStreamResource {
 
-	private static OutputStreamResource resource;
+	private static InputStreamResource resource;
 	
 	@BeforeClass
 	public static void before() throws Exception {
-		resource = new OutputStreamResource(new BufferedOutputStream(
-				new FileOutputStream(new File("D:/tempFile.txt"))));
+		resource = new InputStreamResource(new BufferedInputStream(
+				new FileInputStream(new File("D:/tempFile.txt"))));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorByNull() {
-		new OutputStreamResource(null);
+		new InputStreamResource(null);
 	}
 	
 	@Test
@@ -38,18 +39,19 @@ public class TestOutputStreamResource {
 				+ "], isOpen[" + resource.isOpen()
 				+ "], isReadale[" + resource.isReadable()
 				+ "], isWritable[" + resource.isWritable()
+				+ "], size[" + resource.size()
 				+ "]");
 		
-		OutputStream os = resource.getOutputStream();
+		InputStream is = resource.getInputStream();
 		try {
-			Assert.assertNotNull(os);
+			Assert.assertNotNull(is);
 		} finally {
-			os.close();
+			is.close();
 		}
 	}
 	
 	@Test(expected = IOException.class)
-	public void testInputStream() throws Exception {
-		resource.getInputStream();
+	public void testOutputStream() throws Exception {
+		resource.getOutputStream();
 	}
 }

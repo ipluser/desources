@@ -1,9 +1,11 @@
-package org.mana.core.io;
+package org.mana.resource;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+
+import org.mana.resource.util.AssertUtil;
 
 /**
  * @author pluser
@@ -11,8 +13,8 @@ import java.util.Arrays;
  */
 public class ByteArrayResource extends AbstractResource {
 
-	private static final String DEFAULT_NAME = "byte array resource";
-	private static final String DEFAULT_DESCRIPTION = "resource loaded from byte array";
+	private static final String DEFAULT_NAME = "byte arrays resource";
+	private static final String DEFAULT_DESCRIPTION = "resource loaded from byte arrays";
 	
 	private final byte[] byteArray;
 	private final String name;
@@ -22,12 +24,8 @@ public class ByteArrayResource extends AbstractResource {
 		this(byteArray, null, null);
 	}
 	
-	public ByteArrayResource(byte[] byteArray, String name, 
-			String description) {
-		if (byteArray == null) {
-			throw new IllegalArgumentException(
-					"byte array must not be null");
-		}
+	public ByteArrayResource(byte[] byteArray, String name, String description) {
+		AssertUtil.notNull(byteArray, "byteArray must not be null");
 		
 		this.byteArray = byteArray;
 		this.name = (name == null ? DEFAULT_NAME : name);

@@ -1,4 +1,4 @@
-package org.mana.core.io;
+package org.mana.resource;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -6,6 +6,7 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mana.resource.UrlResource;
 
 /**
  * @author pluser
@@ -18,7 +19,7 @@ public class TestUrlResource {
 	@BeforeClass
 	public static void before() throws Exception {
 		resource = new UrlResource(
-				new URL("http://www.oschina.net/img/logo_s2.png"));
+				new URL("https://avatars3.githubusercontent.com/u/9295121?v=3&s=460"));
 	}
 	
 	@Test

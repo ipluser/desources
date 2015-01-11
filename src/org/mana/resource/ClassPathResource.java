@@ -1,9 +1,12 @@
-package org.mana.core.io;
+package org.mana.resource;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+
+import org.mana.resource.util.AssertUtil;
+import org.mana.resource.util.ClassUtil;
 
 /**
  * @author pluser
@@ -51,12 +54,10 @@ public class ClassPathResource extends AbstractResource {
 	 * @param clazz the class to load resources with
 	 */
 	public ClassPathResource(String path, ClassLoader classLoader, Class<?> clazz) {
-		if (path == null) {
-			throw new IllegalArgumentException("path must not be null");
-		}
+		AssertUtil.notNull(path, "path must not be null");
 		
 		this.path = path;
-		this.classLoader = (classLoader == null) ? getDefaultClassLoader() : classLoader;
+		this.classLoader = (classLoader == null) ? ClassUtil.getDefaultClassLoader() : classLoader;
 		this.clazz = clazz;
 	}
 
@@ -76,7 +77,7 @@ public class ClassPathResource extends AbstractResource {
 	
 	@Override
 	public String getDescription() {
-		return "resource loaded from classPath [" + this.path + "]";
+		return "resource loaded from classPath [" + path + "]";
 	}
 	
 	@Override
@@ -110,7 +111,7 @@ public class ClassPathResource extends AbstractResource {
 		}
 		
 		if (url == null) {
-			throw new FileNotFoundException(getDescription() 
+			throw new FileNotFoundException(getName() 
 					+ " that cannot be resolved to URL");
 		}
 		
@@ -145,9 +146,9 @@ public class ClassPathResource extends AbstractResource {
 		if (obj instanceof ClassPathResource 
 				&& ((ClassPathResource) obj).path.equals(this.path)
 				&& ((ClassPathResource) obj).classLoader.equals(this.classLoader)) {
-			Class<?> tempClazz = ((ClassPathResource) obj).clazz;
-			if (tempClazz == clazz || 
-					(tempClazz != null && clazz != null && tempClazz.equals(clazz))) {
+			Class<?> compareClazz = ((ClassPathResource) obj).clazz;
+			if (compareClazz == clazz || 
+					(compareClazz != null && clazz != null && compareClazz.equals(clazz))) {
 				return true;
 			}
 		}
@@ -158,19 +159,5 @@ public class ClassPathResource extends AbstractResource {
 	@Override
 	public int hashCode() {
 		return path.hashCode();
-	}
-	
-	protected ClassLoader getDefaultClassLoader() {
-		ClassLoader defaultClassLoader = null;
-		try {
-			defaultClassLoader = Thread.currentThread().getContextClassLoader();
-		} catch (Throwable t) {
-		}
-		
-		if (defaultClassLoader == null) {
-			defaultClassLoader = ClassPathResource.class.getClassLoader();
-		}
-		
-		return defaultClassLoader;
 	}
 }

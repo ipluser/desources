@@ -1,7 +1,9 @@
-package org.mana.core.io;
+package org.mana.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.mana.resource.util.AssertUtil;
 
 /**
  * @author pluser
@@ -9,8 +11,8 @@ import java.io.InputStream;
  */
 public class InputStreamResource extends AbstractResource {
 
-	private static final String DEFAULT_NAME = "InputStream resource";
-	private static final String DEFAULT_DESCRIPTION = "resource loaded from InputStream";
+	private static final String DEFAULT_NAME = "input stream resource";
+	private static final String DEFAULT_DESCRIPTION = "resource loaded from input stream";
 	
 	private final InputStream inputStream;
 	private final String name;
@@ -20,11 +22,13 @@ public class InputStreamResource extends AbstractResource {
 		this(inputStream, null, null);
 	}
 	
-	public InputStreamResource(InputStream inputStream, 
-			String name, String description) {
-		if (inputStream == null) {
-			throw new IllegalArgumentException("inputStream must not be null");
-		}
+	public InputStreamResource(InputStream inputStream, String name) {
+		this(inputStream, name, null);
+	}
+	
+	public InputStreamResource(InputStream inputStream, String name, 
+			String description) {
+		AssertUtil.notNull(inputStream, "inputStream must not be null");
 		
 		this.inputStream = inputStream;
 		this.name = (name == null ? DEFAULT_NAME : name);
