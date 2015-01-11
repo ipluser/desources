@@ -4,14 +4,16 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.mana.resource.util.AssertUtil;
+
 /**
  * @author pluser
  * @version 0.5 2014/11/27
  */
 public class OutputStreamResource extends AbstractResource {
 	
-	private static final String DEFAULT_NAME = "OutputStream resource";
-	private static final String DEFAULT_DESCRIPTION = "resource loaded from OutputStream";
+	private static final String DEFAULT_NAME = "output stream resource";
+	private static final String DEFAULT_DESCRIPTION = "resource loaded from output stream";
 
 	private final OutputStream outputStream;
 	private final String name;
@@ -20,15 +22,16 @@ public class OutputStreamResource extends AbstractResource {
 	private AtomicBoolean writable;
 	
 	public OutputStreamResource(OutputStream outputStream) {
-		this(outputStream, "OutputStream resource",
-				"resource loaded from OutputStream");
+		this(outputStream, null, null);
 	}
 	
-	public OutputStreamResource(OutputStream outputStream, 
-			String name, String description) {
-		if (outputStream == null) {
-			throw new IllegalArgumentException("outputStream must not be null");
-		}
+	public OutputStreamResource(OutputStream outputStream, String name) {
+		this(outputStream, name, null);
+	}
+	
+	public OutputStreamResource(OutputStream outputStream, String name, 
+			String description) {
+		AssertUtil.notNull(outputStream, "outputStream must not be null");
 		
 		this.outputStream = outputStream;
 		this.name = (name == null ? DEFAULT_NAME : name);

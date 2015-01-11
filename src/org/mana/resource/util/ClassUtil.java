@@ -6,6 +6,8 @@ package org.mana.resource.util;
  */
 public abstract class ClassUtil {
 
+	public static final String CLASSPATH_URL_PREFIX = "classpath:";
+	
 	public static ClassLoader getDefaultClassLoader() {
 		ClassLoader defaultClassLoader = null;
 		try {

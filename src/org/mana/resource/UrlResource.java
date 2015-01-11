@@ -5,8 +5,11 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import org.mana.resource.util.AssertUtil;
 
 /**
  * @author pluser
@@ -14,30 +17,24 @@ import java.net.URLConnection;
  */
 public class UrlResource extends AbstractResource {
 
-	private URL url;
+	private final URL url;
 	
 	public UrlResource(URL url) {
-		if (url == null) {
-			throw new IllegalArgumentException("url must not be null");
-		}
+		AssertUtil.notNull(url, "url must not be null");
 		
 		this.url = url;
 	}
 	
 	public UrlResource(URI uri) throws MalformedURLException {
-		if (uri == null) {
-			throw new IllegalArgumentException("uri must not be null");
-		}
+		AssertUtil.notNull(uri, "uri must not be null");
 		
 		this.url = uri.toURL();
 	}
 	
-	public UrlResource(String path) throws MalformedURLException {
-		if (path == null) {
-			throw new IllegalArgumentException("path must not be null");
-		}
+	public UrlResource(String spec) throws MalformedURLException {
+		AssertUtil.notNull(spec, "spec must not be null");
 		
-		this.url = new URL(path);
+		this.url = new URL(spec);
 	}
 	
 	@Override
@@ -53,6 +50,15 @@ public class UrlResource extends AbstractResource {
 	@Override
 	public URL getUrl() throws IOException {
 		return url;
+	}
+	
+	@Override
+	public URI getUri() throws IOException {
+		try {
+			return url.toURI();
+		} catch (URISyntaxException e) {
+			throw new IOException(e);
+		}
 	}
 	
 	@Override

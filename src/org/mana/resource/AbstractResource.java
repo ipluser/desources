@@ -42,9 +42,9 @@ public abstract class AbstractResource extends AbstractSource implements Resourc
 	public long size() throws IOException {
 		InputStream inputStream = getInputStream();
 		if (inputStream == null) {
-			throw new FileNotFoundException(getDescription() 
+			throw new FileNotFoundException(getName() 
 					+ " cannot be found in the resource system,"
-					+ " resource input stream must not be null");
+					+ " InputStream of resource must not be null");
 		}
 		
 		try {
@@ -66,13 +66,13 @@ public abstract class AbstractResource extends AbstractSource implements Resourc
 	
 	@Override
 	public long lastModified() throws IOException {
-		throw new FileNotFoundException(getDescription() 
-				+ "cannot be resolved last-modified timestamp");
+		throw new FileNotFoundException(getName() 
+				+ " cannot be resolved last-modified timestamp");
 	}
 	
 	@Override
 	public URL getUrl() throws IOException {
-		throw new FileNotFoundException(getDescription() 
+		throw new FileNotFoundException(getName() 
 				+ " cannot be resolved to URL");
 	}
 	

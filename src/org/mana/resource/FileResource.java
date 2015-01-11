@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.net.URL;
 
+import org.mana.resource.util.AssertUtil;
+
 /**
  * @author pluser
  * @version 0.5 2014/11/22
@@ -19,21 +21,21 @@ public class FileResource extends AbstractResource {
 	private final String path;
 	
 	public FileResource(File file) {
-		if (file == null) {
-			throw new IllegalArgumentException("file must not be null");
-		}
+		AssertUtil.notNull(file, "file must not be null");
 		
 		this.file = file;
 		this.path = this.file.getPath();
 	}
 	
 	public FileResource(String path) {
-		if (path == null) {
-			throw new IllegalArgumentException("path must not be null");
-		}
+		AssertUtil.notNull(path, "path must not be null");
 		
 		this.path = path;
 		this.file = new File(this.path);
+	}
+	
+	public File getFile() {
+		return file;
 	}
 	
 	public String getPath() {

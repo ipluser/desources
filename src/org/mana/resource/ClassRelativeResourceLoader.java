@@ -5,8 +5,8 @@ package org.mana.resource;
  * @version 0.5 2015/1/4
  */
 public class ClassRelativeResourceLoader extends DefaultResourceLoader {
-
-	private Class<?> clazz;
+	
+	private final Class<?> clazz;
 	
 	public ClassRelativeResourceLoader(Class<?> clazz) {
 		this.clazz = clazz;
@@ -19,6 +19,6 @@ public class ClassRelativeResourceLoader extends DefaultResourceLoader {
 	
 	@Override
 	protected Resource getResourceByPath(String path) {
-		return new ClassPathResource(path, clazz);
+		return new ClassPathResource(path, getClassLoader(), clazz);
 	}
 }

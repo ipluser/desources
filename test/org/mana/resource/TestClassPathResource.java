@@ -12,14 +12,14 @@ import org.mana.resource.ClassPathResource;
  */
 public class TestClassPathResource {
 
-	private static final String RELATIVE_PATH = "test.xml";
-	private static final String RELATIVE_ABSOLUTE_PATH = "/org/mana/core/io/test.xml";
-	private static final String ABSOLUTE_PATH = "org/mana/core/io/test.xml";
+	private static final String RELATIVE_PATH = "testConfig.xml";
+	private static final String RELATIVE_ABSOLUTE_PATH = "/org/mana/resource/testConfig.xml";
+	private static final String ABSOLUTE_PATH = "org/mana/resource/testConfig.xml";
 
 	@Test
-	public void testFunctionByAbstractPath() throws Exception {
+	public void testFunctionByAbsolutePath() throws Exception {
 		ClassPathResource resource = new ClassPathResource(ABSOLUTE_PATH);
-		System.out.println("testFunctionByAbstractPath: "
+		System.out.println("testFunctionByAbsolutePath: "
 				+ "name[" + resource.getName()
 				+ "], desc[" + resource.getDescription()
 				+ "], path[" + resource.getPath()

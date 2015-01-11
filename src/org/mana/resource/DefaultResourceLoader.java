@@ -3,6 +3,7 @@ package org.mana.resource;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.mana.resource.util.AssertUtil;
 import org.mana.resource.util.ClassUtil;
 /**
  * @author pluser
@@ -26,13 +27,11 @@ public class DefaultResourceLoader implements ResourceLoader {
 	
 	@Override
 	public Resource getResource(String location) {
-		if (location == null) {
-			throw new IllegalArgumentException("location must not be null");
-		}
+		AssertUtil.notNull(location, "location must not be null");
 		
-		if (location.startsWith(CLASSPATH_URL_PREFIX)) {
-			return new ClassPathResource(location.substring(CLASSPATH_URL_PREFIX.length()), 
-					getClassLoader());
+		if (location.startsWith(ClassUtil.CLASSPATH_URL_PREFIX)) {
+			return new ClassPathResource(location.substring(
+					ClassUtil.CLASSPATH_URL_PREFIX.length()), getClassLoader());
 		} else {
 			try {
 				URL url = new URL(location);
