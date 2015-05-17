@@ -1,4 +1,4 @@
-ManaResource
+mana-resource
 ============
 
-Resource definition
+resource definition
