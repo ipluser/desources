@@ -1,4 +1,4 @@
-mana-resource
-============
-
-resource definition
+## Desources
+  A library to define resources
+## License
+  [MIT](LICENSE)
