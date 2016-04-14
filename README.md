@@ -1,4 +1,4 @@
 ## Desources
-  A library to define resources
+  An library to define resources
 ## License
   [MIT](LICENSE)
